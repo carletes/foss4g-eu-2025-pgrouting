@@ -2,6 +2,8 @@
 services:
   postgresql:
     image: pgrouting
+    ports:
+      - "5432:5432"
     volumes:
       - postgresql:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d:ro
