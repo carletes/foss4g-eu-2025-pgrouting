@@ -14,5 +14,6 @@ if [ ! -f "$osm_file" ]; then
 fi
 
 ${here}/teardown
+${here}/build
 docker compose up --wait
 docker compose exec postgresql /usr/local/bin/load-osm-data
