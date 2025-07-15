@@ -1,0 +1,24 @@
+---
+services:
+  postgresql:
+    image: pgrouting
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+      - ./osm-data:/var/lib/osm-data:ro
+      - ./mapconfig.xml:/etc/pgrouting/mapconfig.xml:ro
+      - ./load-osm-data:/usr/local/bin/load-osm-data:ro
+    tmpfs:
+      - /run/postgresql
+    read_only: true
+    healthcheck:
+      test: >
+        wait-for-it localhost:5432 || exit 1
+      start_period: 10s
+      start_interval: 1s
+      interval: 1m
+      timeout: 5s
+
+volumes:
+  postgresql:
+    driver: local

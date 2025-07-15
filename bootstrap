@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -eux -o pipefail
+
+here=$(cd $(dirname $0) && pwd)
+
+BBOX="17.7888,43.3334,17.8241,43.3579"
+
+osm_file="${here}/osm-data/mostar.osm"
+mkdir -p "$(dirname "$osm_file")"
+
+if [ ! -f "$osm_file" ]; then
+  wget --progress=dot:mega -O "${osm_file}" "http://www.overpass-api.de/api/xapi?*[bbox=${BBOX}][@meta]"
+fi
+
+${here}/teardown
+docker compose up --wait
+docker compose exec postgresql /usr/local/bin/load-osm-data

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+osm2pgrouting \
+  --f /var/lib/osm-data/mostar.osm \
+  --conf /etc/pgrouting/mapconfig.xml \
+  --dbname foss4g \
+  --username foss4g \
+  --password foss4g \
+  --clean
